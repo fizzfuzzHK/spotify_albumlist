@@ -73,8 +73,8 @@ const GetAlbum = () => {
         <div>
             <div className="player">
                 <div className="player__body">
-                    <Sidebar />
-                    {isAlbumList ? <Body/> : <Album/>}
+                    {isAlbumList ? <Body/> : 
+                    <h1>Nothing</h1>}
                     {/* <div className="test1">1</div>
                     <div className="test2">2</div> */}
 

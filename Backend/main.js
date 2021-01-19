@@ -76,6 +76,8 @@ app.get('/getalbum', async (req,res) => {
     const album_data = api_result.data
     console.log(album_data);
     
+    
+
     res.json(album_data)
 })
 

@@ -9,7 +9,8 @@ import reducer, { initialState }  from "./Reducer.js"
 
 import Test from "./GetAlbum"
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import Sidebar from "./Sidebar";
+import Album from "./Album"
 
 const Routing = () => {
     return (
@@ -20,13 +21,30 @@ const Routing = () => {
                     <Home />
                 </Route>
                 <Route path='/getalbum'>
-                    <GetAlbum />
+                    <div className="player__body">
+                        <Sidebar />
+                        <GetAlbum />
+                    </div>
+                </Route>
+                <Route path='/album'>
+                    <div className="player__body">
+                        <Sidebar />
+                        <Album />
+                    </div>
                 </Route>
                 <Route path='/app'>
                     <App />
                 </Route>
             </Switch>
         </Router>
+        <style jsx>{`
+        .player__body {
+                    display: flex;
+                    flex-grow: 2;
+                    width: 100%;
+                }
+        `}
+        </style>
         </div>
     );
 };

@@ -31,6 +31,7 @@ const SidebarAlbum = () => {
             type: "SET_ALBUMS",
             albums: tmp,
         })   
+        console.log(tmp)
     }
 
     return (

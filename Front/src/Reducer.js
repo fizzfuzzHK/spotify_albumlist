@@ -45,13 +45,13 @@ const reducer = (state, action) => {
         case 'SET_ALBUM_LIST':
             return {
                 ...state,
-                artist: action.isAlbumList
+                isAlbumList: action.isAlbumList
             }
 
         case 'SET_SELECTED_ALBUM':
             return {
                 ...state,
-                artist: action.selected_album
+                selectedAlbum: action.selected_album
             }
 
 

@@ -3,7 +3,7 @@ import React from 'react';
 const Album = () => {
     return (
         <div>
-            <h1>test</h1>
+            <h1>this is album</h1>
         </div>
     );
 };

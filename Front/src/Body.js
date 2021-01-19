@@ -29,7 +29,7 @@ const Body = () => {
             type: "SET_SELECTED_ALBUM",
             selected_album: id,
         })  
-
+        window.location.href = "/album"
     }
 
 
