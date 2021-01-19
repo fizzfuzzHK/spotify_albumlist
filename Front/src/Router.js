@@ -20,21 +20,17 @@ const Routing = () => {
                 <Route path='/home'>
                     <Home />
                 </Route>
-                <Route path='/getalbum'>
-                    <div className="player__body">
-                        <Sidebar />
+                <div className="player__body">
+                    <Sidebar />
+                
+                    <Route path='/getalbum'>
                         <GetAlbum />
-                    </div>
-                </Route>
-                <Route path='/album'>
-                    <div className="player__body">
-                        <Sidebar />
+                    </Route>
+
+                    <Route path='/album'>
                         <Album />
-                    </div>
-                </Route>
-                <Route path='/app'>
-                    <App />
-                </Route>
+                    </Route>
+                </div>
             </Switch>
         </Router>
         <style jsx>{`
