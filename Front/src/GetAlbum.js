@@ -11,7 +11,7 @@ const GetAlbum = () => {
     
     const [{ raw_data, library_list, isAlbumList }, dispatch] = useStateValue();
 
-    var list = [];
+    let list = [];
     
     useEffect(() => {
         const getalbum = async() => {
@@ -19,10 +19,10 @@ const GetAlbum = () => {
             const data = response.data; 
             console.log(data);
             
-            var tmp = {}
-            for(var i in data.items) {
+            let tmp = {}
+            for(let i in data.items) {
 
-                var artist = data.items[i].album.artists[0].name
+                let artist = data.items[i].album.artists[0].name
                 if (!tmp.hasOwnProperty(artist)){
                     tmp[artist] = [{
                         id: data.items[i].album.id,
@@ -33,7 +33,7 @@ const GetAlbum = () => {
                     }]
                 }
                 else {
-                    var length = tmp[artist].length                     
+                    let length = tmp[artist].length                     
                     tmp[artist][length] = {
                         id: data.items[i].album.id,
                         album : data.items[i].album.name,
@@ -63,7 +63,7 @@ const GetAlbum = () => {
     //     console.log("loading");
     // }
     // else{ 
-    //     for(var i in library_list.items){
+    //     for(let i in library_list.items){
     //     list.push(library_list.items[i].album.artists[0].name);
     //     }
     //     list = list.sort()
