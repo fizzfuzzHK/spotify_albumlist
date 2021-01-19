@@ -11,10 +11,6 @@ import Test from "./GetAlbum"
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 
-console.log('initialState', initialState);
-console.log('reducer', reducer);
-console.log('stateprovider', StateProvider);
-
 
 ReactDOM.render(
   <React.StrictMode>

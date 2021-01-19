@@ -12,7 +12,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Sidebar from "./Sidebar";
 import Album from "./Album"
 
+
 const Routing = () => {
+    console.log('Routing');
+    
     return (
         <div>
         <Router>
@@ -20,17 +23,10 @@ const Routing = () => {
                 <Route path='/home'>
                     <Home />
                 </Route>
-                <div className="player__body">
-                    <Sidebar />
-                
-                    <Route path='/getalbum'>
-                        <GetAlbum />
-                    </Route>
 
-                    <Route path='/album'>
-                        <Album />
-                    </Route>
-                </div>
+                <Route path='/'>
+                        <App />
+                </Route>
             </Switch>
         </Router>
         <style jsx>{`

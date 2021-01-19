@@ -9,8 +9,8 @@ const Auth = ({code}) => {
     useEffect(() => {
         axios.post(`http://localhost:8888/auth`, {code})
             .then(res => {            
-                console.log(res);
-                window.location.href = "/getalbum"
+                console.log('Auth');
+                window.location.href = "/"
             })
     },[])
     

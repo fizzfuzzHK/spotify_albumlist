@@ -1,7 +1,14 @@
 import React from 'react';
 import SidebarAlbum from "./SidebarAlbum"
+import {useStateValue} from "./DataLayer"
 
 const Sidebar = () => {
+    console.log('Sidebar');
+    const [{ raw_data, library_list, isAlbumList }, dispatch] = useStateValue();
+
+  
+
+
     return (
         <div className="sidebar">
             <div >

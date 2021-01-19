@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom"
 import {useDataLayerValue } from "./DataLayer"
 
 const Home = () => { 
-
+  console.log('Home');
+  
   const [token, setToken] = useState(null);
 
   const getTokenFromUrl = () => {
@@ -17,7 +18,6 @@ const Home = () => {
   }
   
   useEffect(() => {
-    console.log(window.location.search)
     const hash = getTokenFromUrl();
     const token = hash
     if (token) {

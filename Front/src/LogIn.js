@@ -12,9 +12,10 @@ const scopes = [
 
 const auth_url = `${authEndpoint}?client_id=${clinetId}&response_type=code&redirect_uri=${redirectUrl}&scope=${scopes[0]} ${scopes[1]}`
 
-console.log(auth_url)
 
 const LogIn = () => {
+    console.log('Login');
+
     return (
         <div>
             <div className="login">

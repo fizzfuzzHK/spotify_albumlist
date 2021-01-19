@@ -1,10 +1,13 @@
 import React from 'react';
 import { useStateValue } from "./DataLayer"
+import { withRouter } from 'react-router';
 
-const SidebarAlbum = () => {
-
+const SidebarAlbum = withRouter(props => {
+    console.log('SidebarAlbum');
+    
     const [{ library_list, albums, isAlbumList }, dispatch] = useStateValue();
-
+    
+    
     var list = []
     if(!Object.keys(library_list).length){
         console.log("loading");
@@ -12,15 +15,18 @@ const SidebarAlbum = () => {
     else{ 
         list =Object.keys(library_list);
         list = list.sort()
+        console.log('function list');
+        
+
     }
     
-    const handleOnClick = (name) => {
+    const handleOnClick =  (name) => {
         var tmp = library_list[name]
-
-        dispatch({
-            type: "SET_ALBUM_LIST",
-            isAlbumList: true,
-        })  
+        
+        // dispatch({
+        //     type: "SET_ALBUM_LIST",
+        //     isAlbumList: true,
+        // })  
 
         dispatch({
             type: "SET_ARTIST",
@@ -31,7 +37,8 @@ const SidebarAlbum = () => {
             type: "SET_ALBUMS",
             albums: tmp,
         })   
-        console.log(tmp)
+        
+        props.history.push(`/artist/${name}`);
     }
 
     return (
@@ -65,6 +72,6 @@ const SidebarAlbum = () => {
             `}</style>
         </div>
     );
-};
+});
 
 export default SidebarAlbum;

@@ -4,13 +4,15 @@ import MediaQuery from "react-responsive";
 
 const Body = () => {
     const [{ library_list, albums, artist, isAlbumList, selected_album }, dispatch] = useStateValue();
-
+    console.log('Body');
+    console.log(albums)
     var list = []
     if(!Object.keys(albums).length){
         console.log("loading");
     }
     else{ 
     var tmp = "Various Artists"
+    console.log('Albums=' + albums);
     
     for(var i in albums){
         list.push(albums);
@@ -38,7 +40,6 @@ const Body = () => {
             <div >
                 
                 <h1 className="artist__name">{artist}</h1>
-
                 {Object.keys(albums).length ? 
                 <div>
                     <MediaQuery query="(max-width: 1000px)">
