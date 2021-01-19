@@ -15,13 +15,14 @@ const Album = () => {
     for(var i in albums){
         list.push(albums);
         }
+        console.log(albums);
+
     }
 
-    console.log(albums);
     
     return (
         <div>
-            {Object.keys(albums).length ? <h1>this is {albums[1].items}</h1> : <div></div>}
+            {Object.keys(albums).length ? <h1>{albums[0].album}</h1> : <div><h1>test</h1></div>}
         </div>
     );
 };

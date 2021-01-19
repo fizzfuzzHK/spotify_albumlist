@@ -1,8 +1,9 @@
 import React from 'react';
 import {useStateValue} from "./DataLayer"
 import MediaQuery from "react-responsive";
+import { withRouter } from 'react-router';
 
-const Body = () => {
+const Body = withRouter(props => {
     const [{ library_list, albums, artist, isAlbumList, selected_album }, dispatch] = useStateValue();
     console.log('Body');
     console.log(albums)
@@ -31,7 +32,7 @@ const Body = () => {
             type: "SET_SELECTED_ALBUM",
             selected_album: id,
         })  
-        window.location.href = "/album"
+        props.history.push(`/album/${id}`);
     }
 
 
@@ -146,7 +147,7 @@ const Body = () => {
             `}</style>
         </div>
     );
-};
+});
 
 
 export default Body;

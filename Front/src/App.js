@@ -50,7 +50,7 @@ const App = () => {
                         <Body />
                     </Route>
 
-                    <Route path='/album'>
+                    <Route path='/album/:id'>
                         <Album />
                     </Route>
                 </div>
