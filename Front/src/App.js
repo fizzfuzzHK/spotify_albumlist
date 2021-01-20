@@ -5,12 +5,12 @@ import getAlbumList from "./getAlbumList"
 import Album from "./Album"
 import Artist from "./Artist"
 import Sidebar from "./Sidebar"
-import Body from "./Body"
 
 const App = () => {
   
     const [{ raw_data, library_list, isAlbumList }, dispatch] = useStateValue();
-    
+    const [album_id, setAlbumId] = useState()
+
     useEffect(async () => {
             console.log('useEffect');
             
@@ -38,20 +38,21 @@ const App = () => {
         }
     ,[])
     console.log('App');
-
+      console.log(album_id);
+      
     return (
         <div>
          <Router>
             <Switch>
                 <div className="player__body">
-                    <Sidebar />
+                    <Sidebar  />
                   
                     <Route path='/artist/:id'>
-                        <Body />
+                        <Artist album_id={album_id} setAlbumId = {setAlbumId}/>
                     </Route>
 
                     <Route path='/album/:id'>
-                        <Album />
+                        <Album album_id={album_id}/>
                     </Route>
                 </div>
             </Switch>

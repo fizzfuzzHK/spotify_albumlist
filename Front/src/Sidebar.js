@@ -18,7 +18,7 @@ const Sidebar = () => {
                     alt=""
                 />
                 <h1 className="sidebar__title">Artists</h1>
-                <SidebarAlbum />
+                <SidebarAlbum  />
             </div>
             <style jsx>{`
                 .sidebar {

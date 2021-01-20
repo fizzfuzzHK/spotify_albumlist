@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import { useStateValue } from "./DataLayer"
 import Sidebar from "./Sidebar"
-import Body from "./Body"
 import Album from "./Album"
 import Footer from "./Footer"
 
