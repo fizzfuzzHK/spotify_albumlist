@@ -46,11 +46,11 @@ const Artist = withRouter(({history,　...props })=> {
             <div >
                 
                 <h1 className="artist__name">{props.artist}</h1>
-                {!props.albumList === undefined ? 
+                {props.albumList != undefined ? 
                 <div>
                     <MediaQuery query="(max-width: 1000px)">
                     <ul className="album__container_ipad">
-                    {list.map((item, i) =>{
+                    {props.albumList.map((item, i) =>{
                         return<div className="body__element" onClick={() => handleOnClick(item["id"])}>
 
                             <img className="album__image" key={i} src={item["image"]} />
@@ -63,7 +63,7 @@ const Artist = withRouter(({history,　...props })=> {
                     </MediaQuery>
                     <MediaQuery query="(min-width: 1001px)">
                     <ul className="album__container_web">
-                    {list.map((item, i) =>{
+                    {props.albumList.map((item, i) =>{
                         return<div className="body__element" onClick={() => handleOnClick(item["album"])}>
 
                             <img className="album__image" key={i} src={item["image"]} />

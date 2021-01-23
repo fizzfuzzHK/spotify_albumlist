@@ -10,6 +10,13 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
+  resolve : {
+    fallback: 
+      { "path": false,
+        "zlib": false,
+        "crypto": false }
+
+  },
   module: {
     rules: [{
       test: /\.jsx?$/,

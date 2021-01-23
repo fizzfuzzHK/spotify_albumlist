@@ -19,8 +19,12 @@ const App = () => {
             console.log('useEffect');
             
             let list = await getAlbumList();
+
+            console.log('beforeset');
+            console.log("list" + JSON.stringify(list, null, 2));
+            
             setArtistList(list)
-            console.log("artistList = " + artistList);
+            // console.log("artistList = " + artistList);
             
         }
     ,[])
