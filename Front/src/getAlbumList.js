@@ -14,7 +14,7 @@ const getAlbumList = async() => {
                 id: data.items[i].album.id,
                 album : data.items[i].album.name,
                 image: data.items[i].album.images[1].url,
-                tracks: data.items[i].album.tracks,
+                // tracks: data.items[i].album.tracks,
                 year: data.items[i].album.release_date
             }]
         }
@@ -24,7 +24,7 @@ const getAlbumList = async() => {
                 id: data.items[i].album.id,
                 album : data.items[i].album.name,
                 image: data.items[i].album.images[1].url,
-                tracks: data.items[i].album.tracks,
+                // tracks: data.items[i].album.tracks,
                 year: data.items[i].album.release_date
             }
         }

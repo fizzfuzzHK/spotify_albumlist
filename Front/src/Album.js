@@ -2,22 +2,22 @@ import React,{ useState, useEffect }from "react";
 import { useStateValue } from "./DataLayer"
 import axios from "axios"
 
-const Album = (album_id) => {
+const Album = ({...props}) => {
     const [{ library_list, albums, isAlbumList, selected_album}, dispatch] = useStateValue();
     const [trackList, setTrackList] = useState([])
     console.log('Album');
     
     var list = []
-    if(!Object.keys(albums).length){
+    if(props.albumList === undefined){
         console.log("loading");
     }
     else{ 
     var tmp = "Various Artists"
     
-    for(var i in albums){
-        list.push(albums);
+    for(var i in props.albumList){
+        list.push(props.albumList);
         }
-        console.log(albums);
+        console.log(props.albumList);
         
     }
 
@@ -55,7 +55,7 @@ const Album = (album_id) => {
     return (
         <div>
             <div className="album">
-                {Object.keys(albums).length ? <h1 className="album__title">{albums[0].album}</h1> : <div></div>}
+                {!props.albumList === undefined ? <h1 className="album__title">{albums[0].album}</h1> : <div></div>}
                 <ul className="track_list">
                         {trackList.map((item, i) =>{
                             return(

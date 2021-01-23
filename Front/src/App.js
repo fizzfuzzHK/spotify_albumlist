@@ -10,49 +10,46 @@ const App = () => {
   
     const [{ raw_data, library_list, isAlbumList }, dispatch] = useStateValue();
     const [album_id, setAlbumId] = useState()
+    const [artistList, setArtistList] = useState()
+    const [albumList, setAlbumList] = useState()
+    const [artist, setArtist] = useState()
+
 
     useEffect(async () => {
             console.log('useEffect');
             
-            const list = await getAlbumList();
-
-            dispatch({
-                type: "SET_LIBRARY_LIST",
-                library_list: list,
-            })      
-            console.log('test');
+            let list = await getAlbumList();
+            setArtistList(list)
+            console.log("artistList = " + artistList);
             
-            dispatch({
-                type: "SET_RAW_DATA",
-                raw_data: list,
-            })    
-            
-            console.log('test2');
-
-            dispatch({
-              type: "SET_RAW_DATA",
-              raw_data: list,
-          })            
-          console.log('test3');
-          
         }
     ,[])
+
+    const props = {
+      artistList : artistList,
+      albumList : albumList,
+      album_id : album_id,
+      setAlbumId : setAlbumId,
+      setAlbumList : setAlbumList,
+      artist : artist,
+      setArtist : setArtist
+    }
+
     console.log('App');
-      console.log(album_id);
       
     return (
         <div>
          <Router>
             <Switch>
                 <div className="player__body">
-                    <Sidebar  />
+                    <Sidebar {...props} />
                   
                     <Route path='/artist/:id'>
-                        <Artist album_id={album_id} setAlbumId = {setAlbumId}/>
+                        <Artist {...props}/>
                     </Route>
 
                     <Route path='/album/:id'>
-                        <Album album_id={album_id}/>
+                        <Album {...props}/>
                     </Route>
                 </div>
             </Switch>

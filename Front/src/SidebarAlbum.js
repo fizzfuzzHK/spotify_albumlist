@@ -1,19 +1,21 @@
 import React from 'react';
 import { useStateValue } from "./DataLayer"
 import { withRouter } from 'react-router';
+import { json } from 'express';
 
-const SidebarAlbum = withRouter(props => {
+const SidebarAlbum = withRouter(({history, ...props}) => {
     console.log('SidebarAlbum');
-    
+    console.log(props);
+
     const [{ library_list, albums, isAlbumList }, dispatch] = useStateValue();
     
     
     var list = []
-    if(!Object.keys(library_list).length){
+    if(props.artistList === undefined){
         console.log("loading");
     }
     else{ 
-        list =Object.keys(library_list);
+        list =Object.keys(props.artistList);
         list = list.sort()
         console.log('function list');
         
@@ -21,24 +23,25 @@ const SidebarAlbum = withRouter(props => {
     }
     
     const handleOnClick =  (name) => {
-        var tmp = library_list[name]
+        var tmp = []
+        // console.log(JSON.stringify(props.artistList[name], null, 2));
         
+        // for (let i in props.artistList[name]){
+        //  tmp.push =  props.artistList[name]
+        // }
         // dispatch({
         //     type: "SET_ALBUM_LIST",
         //     isAlbumList: true,
         // })  
-
-        dispatch({
-            type: "SET_ARTIST",
-            artist: name,
-        })  
-
-        dispatch({
-            type: "SET_ALBUMS",
-            albums: tmp,
-        })   
+        console.log('tmp = ' + JSON.stringify(tmp, null, 2));
         
-        props.history.push(`/artist/${name}`);
+        
+        props.setArtist(name)
+
+       props.setAlbumList(tmp)
+        console.log(props.albumList);
+        
+        history.push(`/artist/${name}`);
     }
 
     return (
