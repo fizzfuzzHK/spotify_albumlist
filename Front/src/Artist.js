@@ -3,54 +3,54 @@ import {useStateValue} from "./DataLayer"
 import MediaQuery from "react-responsive";
 import { withRouter } from 'react-router';
 
-const Artist = withRouter(({history, album_id, setAlbumId })=> {
-    const [{ library_list, albums, artist, isAlbumList, selected_album }, dispatch] = useStateValue();
+const Artist = withRouter(({history,　...props })=> {
     console.log('Body');
-    console.log(albums)
     var list = []
-    if(!Object.keys(albums).length){
+    if(props.albumList === undefined){
         console.log("loading");
     }
     else{ 
     var tmp = "Various Artists"
-    console.log('Albums=' + albums);
+    console.log('Albums=' + JSON.stringify(props.albumList));
     
-    for(var i in albums){
-        list.push(albums);
+    for(var i in props.albumList){
+        list.push(props.albumList);
         }
+
+        
     }
     
     const handleOnClick = (id) => {
         console.log(isAlbumList)
         
-        dispatch({
-            type: "SET_ALBUM_LIST",
-            isAlbumList: false,
-        })  
+        // dispatch({
+        //     type: "SET_ALBUM_LIST",
+        //     isAlbumList: false,
+        // })  
 
-        dispatch({
-            type: "SET_SELECTED_ALBUM",
-            selected_album: id,
-        })  
+        // dispatch({
+        //     type: "SET_SELECTED_ALBUM",
+        //     selected_album: id,
+        // })  
         setAlbumId(id)
         history.push(`/album/${id}`);
     }
 
-    useEffect(() => {
-        console.log("setState + " +album_id)
+    // useEffect(() => {
+    //     console.log("setState + " +album_id)
 
-    }, [album_id]);
+    // }, [album_id]);
 
     return (
         <div className="body">
             <div >
                 
-                <h1 className="artist__name">{artist}</h1>
-                {Object.keys(albums).length ? 
+                <h1 className="artist__name">{props.artist}</h1>
+                {props.albumList != undefined ? 
                 <div>
                     <MediaQuery query="(max-width: 1000px)">
                     <ul className="album__container_ipad">
-                    {albums.map((item, i) =>{
+                    {props.albumList.map((item, i) =>{
                         return<div className="body__element" onClick={() => handleOnClick(item["id"])}>
 
                             <img className="album__image" key={i} src={item["image"]} />
@@ -63,7 +63,7 @@ const Artist = withRouter(({history, album_id, setAlbumId })=> {
                     </MediaQuery>
                     <MediaQuery query="(min-width: 1001px)">
                     <ul className="album__container_web">
-                    {albums.map((item, i) =>{
+                    {props.albumList.map((item, i) =>{
                         return<div className="body__element" onClick={() => handleOnClick(item["album"])}>
 
                             <img className="album__image" key={i} src={item["image"]} />

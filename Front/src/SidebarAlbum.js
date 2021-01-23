@@ -8,35 +8,46 @@ const SidebarAlbum = withRouter(props => {
     const [{ library_list, albums, isAlbumList }, dispatch] = useStateValue();
     
     
+      
     var list = []
-    if(!Object.keys(library_list).length){
+    if(props.artistList === undefined){
         console.log("loading");
     }
     else{ 
-        list =Object.keys(library_list);
+        list =Object.keys(props.artistList);
         list = list.sort()
-        console.log('function list');
+        console.log('function list' + JSON.stringify(props.artistList["King Princess"][1]));
+
         
 
     }
+
     
     const handleOnClick =  (name) => {
-        var tmp = library_list[name]
+        var tmp = props.artistList[name]
+        console.log("tmp = "+JSON.stringify(tmp, null, 2));
         
         // dispatch({
         //     type: "SET_ALBUM_LIST",
         //     isAlbumList: true,
         // })  
 
-        dispatch({
-            type: "SET_ARTIST",
-            artist: name,
-        })  
+        // dispatch({
+        //     type: "SET_ARTIST",
+        //     artist: name,
+        // })  
 
-        dispatch({
-            type: "SET_ALBUMS",
-            albums: tmp,
-        })   
+        // dispatch({
+        //     type: "SET_ALBUMS",
+        //     albums: tmp,
+        // })   
+        
+
+        
+        props.setArtist(name)
+
+        props.setAlbumList(tmp)
+        // console.log(props.albumList);
         
         props.history.push(`/artist/${name}`);
     }
@@ -65,7 +76,6 @@ const SidebarAlbum = withRouter(props => {
                     transition: 100ms color ease-in;
                     margin-left: 0px;
                 }
-
                 .list:hover {
                     color: white
                 }

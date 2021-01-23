@@ -2,12 +2,13 @@ import React from 'react';
 import SidebarAlbum from "./SidebarAlbum"
 import {useStateValue} from "./DataLayer"
 
-const Sidebar = () => {
+const Sidebar = ({...props}) => {
     console.log('Sidebar');
     const [{ raw_data, library_list, isAlbumList }, dispatch] = useStateValue();
 
   
-
+    console.log(props);
+    
 
     return (
         <div className="sidebar">
@@ -18,7 +19,7 @@ const Sidebar = () => {
                     alt=""
                 />
                 <h1 className="sidebar__title">Artists</h1>
-                <SidebarAlbum  />
+                <SidebarAlbum {...props} />
             </div>
             <style jsx>{`
                 .sidebar {
