@@ -24,13 +24,12 @@ const Sidebar = ({...props}) => {
             <style jsx>{`
                 .sidebar {
                     font-family: "Meiryo", sans-serif;
-                    border: 1px solid black;
                     height: 100vh;
                     width: 100%;
                     flex: 0.1;
-                    color: white;
+                    
                     min-width: 230px;
-                    background-color: #040404;
+                    background-color: white;
                     padding-left: 10px;
                     padding-right: 10px;
                     overflow: scroll;
@@ -44,7 +43,7 @@ const Sidebar = ({...props}) => {
                 }
                 .sidebar__title {
                     padding: 10px;
-                    font-size: medium;
+                    font-size: 20px;
 
                 }
                 .sidebar__title h1 {

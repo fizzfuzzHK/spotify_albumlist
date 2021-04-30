@@ -55,37 +55,77 @@ const Album = ({...props}) => {
         <div>
             <div className="album">
                 {!props.albumList === undefined ? <h1 className="album__title">title</h1> : <div></div>}
-                <img></img>
-                <ul className="track_list">
-                        {trackList.map((item, i) =>{
-                            return(
-                            <li className="list" onClick={() => handleOnClick(item)} key={i}>{i+1}  {item.name}</li>
-                            
-                            )
-                        })}
-                </ul>
+                <img className = "album__image" src="https://i.scdn.co/image/ab67616d00001e022430f37a995a340f1c3b0efd"/>
+                <div className="album__info">
+                    <div className="album__header">
+                        <div className="album__title">Hi Scores 2014 Edition - EP</div>
+                        <div className="artist__name">Boards of Canada</div>
+                        <div className="album__genre">エレクトロニック 2014年</div>
+                        <div className="album__buttons"></div>
+                    </div>
+                    <div className="track_list">
+                            {trackList.map((item, i) =>{
+                                return(
+                                <div className="list" onClick={() => handleOnClick(item)} key={i}>{i+1}  {item.name}</div>
+                                
+                                )
+                            })}
+                    </div>
+                </div>
             </div>
                 <style jsx>{`
 
                 .album {
-                    width: 100vw;
+                    display: flex;
+                    width: 100%;
                     height: 100vh;
                     flex: 0.9;
-                    color: white;
-                    padding: 0px;
-                    background: linear-gradient(rgb(91, 87, 115), rgba(0,0,0,1));
-                    background-color: green;
+                    background-color: rgb(245, 245, 245);
+                    color: black;
+                    padding: 40px;
+                    padding-right: 40px;
+                    {/* background: linear-gradient(rgb(91, 87, 115), rgba(0,0,0,1)); */}
                     overflow: scroll;
+                    {/* border: red solid 1px; */}
                 }
                 
+                .album__image {
+                    background-color: red;
+                    width: 20vw;
+                    height: 20vw;
+                }
+
+                .album__info {
+                    display: flex;
+                    flex-direction: column;
+                    width: 80vw;
+                    margin-left: 40px;
+
+                }
+
+                .album__title {
+                    font-size: 30px;
+                    font-weight: 800;
+                }
+
+                .artist__name {
+                    font-size: 20px;   
+                }
+
+                .album__genre {
+                    font-size: small;
+                }
 
                 .track_list {
                     list-style: none;
+                    margin-top: 20px;
                     margin-left: 5px;
                     padding: 0;
                     overflow: scroll;
+                    display: table;
                 }
                 .list {
+                    display: table-row;
                     font-size: small;
                     padding: 5px;
                     color: grey;

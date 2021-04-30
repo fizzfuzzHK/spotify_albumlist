@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState, useEffect }from "react";
 import { useStateValue } from "./DataLayer"
 import { withRouter } from 'react-router';
 
@@ -8,26 +8,35 @@ const SidebarAlbum = withRouter(({history, ...props}) => {
 
     const [{ library_list, albums, isAlbumList }, dispatch] = useStateValue();
     
-    
-      
-    var list = []
-    if(props.artistList === undefined){
+    let tmp = []
+    let list = []
+
+    if(props.sourceData === undefined){
         console.log("loading");
     }
     else{ 
-        list =Object.keys(props.artistList);
-        list = list.sort()
-        console.log('function list' + JSON.stringify(props.artistList["King Princess"][1]));
-
+        tmp = Object.values(props.sourceData);    
+        for (let i in tmp){
+            list.push(tmp[i]["name"])
+        }   
+        list.sort()
+        // console.log('function list' + JSON.stringify(props.sourceData,null,2));
         
-
     }
 
+    useEffect(() => {
+        props.setArtistList(list)
+
+    },[])
     
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
+      }
+
     const handleOnClick =  (name) => {
 
-        var tmp = props.artistList[name]
-        console.log("tmp = "+JSON.stringify(tmp, null, 2));
+        // var tmp = props.sourceData[]
+        // console.log("tmp = "+ getKeyByValue(props.sourceData,name));
         
         // for (let i in props.artistList[name]){
         //  tmp.push =  props.artistList[name]
@@ -36,10 +45,11 @@ const SidebarAlbum = withRouter(({history, ...props}) => {
         //     type: "SET_ALBUM_LIST",
         //     isAlbumList: true,
         // })  
+        let id = "6beUvFUlKliUYJdLOXNj9C"
+
         console.log('tmp = ' + JSON.stringify(tmp, null, 2));
         
-        
-        props.setArtist(name)
+        props.setCurrentArtist(id)
 
 
         // dispatch({
@@ -53,13 +63,11 @@ const SidebarAlbum = withRouter(({history, ...props}) => {
         // })   
         
 
-        
-        props.setArtist(name)
 
-        props.setAlbumList(tmp)
+        props.setAlbumList(props.sourceData[id]["album"])
         // console.log(props.albumList);
         
-        history.push(`/artist/${name}`);
+        history.push(`/artist/${id}`);
     }
 
     return (
@@ -81,13 +89,13 @@ const SidebarAlbum = withRouter(({history, ...props}) => {
                 .list {
                     font-size: small;
                     padding: 5px;
-                    color: grey;
+                    color: rgb(48, 48, 48);
                     cursor: pointer;
                     transition: 100ms color ease-in;
                     margin-left: 0px;
                 }
                 .list:hover {
-                    color: white
+                    color: rgb(0, 0, 0)
                 }
             `}</style>
         </div>
@@ -95,3 +103,4 @@ const SidebarAlbum = withRouter(({history, ...props}) => {
 });
 
 export default SidebarAlbum;
+ 

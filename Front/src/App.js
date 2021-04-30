@@ -10,9 +10,11 @@ const App = () => {
   
     const [{ raw_data, library_list, isAlbumList }, dispatch] = useStateValue();
     const [albumId, setAlbumId] = useState()
+    const [sourceData, setSourceData] = useState()
     const [artistList, setArtistList] = useState()
     const [albumList, setAlbumList] = useState()
-    const [artist, setArtist] = useState()
+    const [currentArtist, setCurrentArtist] = useState()
+    
 
 
     useEffect(async () => {
@@ -23,20 +25,22 @@ const App = () => {
             console.log('beforeset');
             console.log("list" + JSON.stringify(list, null, 2));
             
-            setArtistList(list)
+            setSourceData(list)
             // console.log("artistList = " + artistList);
             
         }
     ,[])
 
     const props = {
-      artistList : artistList,
+      sourceData : sourceData,
+      artistList: artistList,
       albumList : albumList,
       albumId : albumId,
       setAlbumId : setAlbumId,
       setAlbumList : setAlbumList,
-      artist : artist,
-      setArtist : setArtist
+      currentArtist : currentArtist,
+      setCurrentArtist : setCurrentArtist,
+      setArtistList:setArtistList
     }
 
     console.log('App');
@@ -45,9 +49,9 @@ const App = () => {
         <div>
          <Router>
             <Switch>
-                <div className="player__body">
+                <div className="app">
                     <Sidebar {...props} />
-                  
+                  <div className="app__body">
                     <Route path='/artist/:id'>
                         <Artist {...props}/>
                     </Route>
@@ -55,16 +59,20 @@ const App = () => {
                     <Route path='/album/:id'>
                         <Album {...props}/>
                     </Route>
+                    </div>
                 </div>
             </Switch>
         </Router>
 
         <style jsx>{`
-        .player__body {
+        .app {
                     display: flex;
                     flex-grow: 2;
                     width: 100%;
                 }
+        .app__body {
+          width: 90%;
+        }
         `}
         </style>
         </div>

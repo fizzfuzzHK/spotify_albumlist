@@ -5,7 +5,8 @@ import { withRouter } from 'react-router';
 
 const Artist = withRouter(({history,　...props })=> {
     console.log('Body');
-    var list = []
+    let artistName
+    let list = []
     if(props.albumList === undefined){
         console.log("loading");
     }
@@ -16,9 +17,11 @@ const Artist = withRouter(({history,　...props })=> {
     for(var i in props.albumList){
         list.push(props.albumList);
         }
-
-        
     }
+
+    useEffect(() => {
+        artistName = props.sourceData
+    },[props.currentArtist])
     
     const handleOnClick = (id) => {
         console.log("id is " + id)
@@ -45,7 +48,7 @@ const Artist = withRouter(({history,　...props })=> {
         <div className="body">
             <div >
                 
-                <h1 className="artist__name">{props.artist}</h1>
+                <h1 className="artist__name">{artistName}</h1>
                 {props.albumList != undefined ? 
                 <div>
                     <MediaQuery query="(max-width: 1000px)">
@@ -54,7 +57,7 @@ const Artist = withRouter(({history,　...props })=> {
                         return<div className="body__element" onClick={() => handleOnClick(item["id"])}>
 
                             <img className="album__image" key={i} src={item["image"]} />
-                            <div className="album__name" key={i}>{item["album"]}</div>
+                            <div className="album__name" key={i}>{item["name"]}</div>
                             <div className="album__year" key={i}>{item["year"]}年</div>
 
                         </div>
@@ -67,7 +70,7 @@ const Artist = withRouter(({history,　...props })=> {
                         return<div className="body__element" onClick={() => handleOnClick(item["id"])}>
 
                             <img className="album__image" key={i} src={item["image"]} />
-                            <div className="album__name" key={i}>{item["album"]}</div>
+                            <div className="album__name" key={i}>{item["name"]}</div>
                             <div className="album__year" key={i}>{item["year"]}年</div>
 
                         </div>
@@ -83,10 +86,9 @@ const Artist = withRouter(({history,　...props })=> {
                     width: 100%;
                     height: 100vh;
                     flex: 0.9;
-                    color: white;
+                    color: black;
                     padding: 0px;
-                    background: linear-gradient(rgb(91, 87, 115), rgba(0,0,0,1));
-                    background-color: green;
+                    background-color: rgb(245, 245, 245);
                     overflow: scroll;
 
                 }
