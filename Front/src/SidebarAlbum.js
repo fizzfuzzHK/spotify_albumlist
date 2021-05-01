@@ -1,40 +1,62 @@
-import React,{ useState, useEffect }from "react";
+import React,{ useState, useEffect, useRef }from "react";
 import { useStateValue } from "./DataLayer"
 import { withRouter } from 'react-router';
 
 const SidebarAlbum = withRouter(({history, ...props}) => {
-    console.log('SidebarAlbum');
-    console.log(props);
 
     const [{ library_list, albums, isAlbumList }, dispatch] = useStateValue();
     
+    const loadData = key => {
+        const loadJSON = key =>
+        key && JSON.parse(localStorage.getItem(key));
+
+        let data = loadJSON("data")
+
+        return data
+    }
+
+    let data = loadData("data")
+
+    const isFirstRender = useRef(false)
+
+    useEffect(() => { // このeffectは初回レンダー時のみ呼ばれるeffect
+        isFirstRender.current = true
+      }, [])
+
     let tmp = []
     let list = []
+    let artistId =""
 
-    if(props.sourceData === undefined){
-        console.log("loading");
-    }
-    else{ 
-        tmp = Object.values(props.sourceData);    
-        for (let i in tmp){
-            list.push(tmp[i]["name"])
-        }   
-        list.sort()
-        // console.log('function list' + JSON.stringify(props.sourceData,null,2));
-        
-    }
+    
+    tmp = Object.values(data);    
+    for (let i in tmp){
+        list.push([tmp[i]["artistName"],tmp[i]["id"]])
+    }   
+    list.sort()
+    // console.log('function list' + JSON.stringify(props.sourceData,null,2));
+    
+    
 
     useEffect(() => {
         props.setArtistList(list)
 
     },[])
+  
+    useEffect(() => {
+        if(isFirstRender.current) { // 初回レンダー判定
+            isFirstRender.current = false // もう初回レンダーじゃないよ代入
+          } else {
+        console.log("album List " + props.albumList);
+        history.push(`/artist/${props.currentArtist["id"]}`);
+    }
+    },[props.currentArtist])
     
+
     function getKeyByValue(object, value) {
         return Object.keys(object).find(key => object[key] === value);
       }
 
-    const handleOnClick =  (name) => {
-
+    const  handleOnClick =  (id) => {
         // var tmp = props.sourceData[]
         // console.log("tmp = "+ getKeyByValue(props.sourceData,name));
         
@@ -45,11 +67,9 @@ const SidebarAlbum = withRouter(({history, ...props}) => {
         //     type: "SET_ALBUM_LIST",
         //     isAlbumList: true,
         // })  
-        let id = "6beUvFUlKliUYJdLOXNj9C"
-
-        console.log('tmp = ' + JSON.stringify(tmp, null, 2));
         
-        props.setCurrentArtist(id)
+        props.setAlbumList(data[id]["albums"])
+        props.setCurrentArtist({id:id, name:data[id]["artistName"]})
 
 
         // dispatch({
@@ -64,10 +84,7 @@ const SidebarAlbum = withRouter(({history, ...props}) => {
         
 
 
-        props.setAlbumList(props.sourceData[id]["album"])
-        // console.log(props.albumList);
         
-        history.push(`/artist/${id}`);
     }
 
     return (
@@ -75,7 +92,7 @@ const SidebarAlbum = withRouter(({history, ...props}) => {
             <div>
                 <ul className="album__list">
                     {list.map((item, i) =>{
-                        return<li className="list" onClick={() => handleOnClick(item)} key={i}>{item}</li>
+                        return<li className="list" onClick={() => handleOnClick(item[1])} key={i}>{item[0]}</li>
                     })}
                 </ul>
             </div>

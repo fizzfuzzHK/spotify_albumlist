@@ -13,18 +13,12 @@ const App = () => {
     const [sourceData, setSourceData] = useState()
     const [artistList, setArtistList] = useState()
     const [albumList, setAlbumList] = useState()
-    const [currentArtist, setCurrentArtist] = useState()
+    const [currentArtist, setCurrentArtist] = useState({id:"", name:""})
     
 
 
-    useEffect(async () => {
-            console.log('useEffect');
-            
-            let list = await getAlbumList();
-
-            console.log('beforeset');
-            console.log("list" + JSON.stringify(list, null, 2));
-            
+    useEffect(async () => {            
+            let list = await getAlbumList();            
             setSourceData(list)
             // console.log("artistList = " + artistList);
             
@@ -42,8 +36,6 @@ const App = () => {
       setCurrentArtist : setCurrentArtist,
       setArtistList:setArtistList
     }
-
-    console.log('App');
       
     return (
         <div>
@@ -56,9 +48,9 @@ const App = () => {
                         <Artist {...props}/>
                     </Route>
 
-                    <Route path='/album/:id'>
+                    {/* <Route path='/album/:id'>
                         <Album {...props}/>
-                    </Route>
+                    </Route> */}
                     </div>
                 </div>
             </Switch>

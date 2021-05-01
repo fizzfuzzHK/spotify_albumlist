@@ -13,9 +13,7 @@ import Sidebar from "./Sidebar";
 import Album from "./Album"
 
 
-const Routing = () => {
-    console.log('Routing');
-    
+const Routing = () => {    
     return (
         <div>
         <Router>

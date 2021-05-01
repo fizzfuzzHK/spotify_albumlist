@@ -3,11 +3,7 @@ import SidebarAlbum from "./SidebarAlbum"
 import {useStateValue} from "./DataLayer"
 
 const Sidebar = ({...props}) => {
-    console.log('Sidebar');
     const [{ raw_data, library_list, isAlbumList }, dispatch] = useStateValue();
-
-  
-    console.log(props);
     
 
     return (

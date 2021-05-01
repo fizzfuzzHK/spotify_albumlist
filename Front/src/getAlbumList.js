@@ -1,10 +1,12 @@
 import axios from "axios";
 
+const saveJSON = (key, data) =>
+  localStorage.setItem(key, JSON.stringify(data));
+
+
 const getAlbumList = async() => {
     const response = await axios.get(`http://localhost:8888/getalbum`)
-    const data = response.data; 
-    console.log('getalbumlist' + JSON.stringify(data,null,2));
-    
+    const data = response.data;     
     let tmp = {}
     for(let i in data.items) {
 
@@ -13,10 +15,10 @@ const getAlbumList = async() => {
         if (!tmp.hasOwnProperty(artist_id)){
             tmp[artist_id] = {
                 id: artist_id,
-                name : artist,
-                album : [{
+                artistName : artist,
+                albums : [{
                     id: data.items[i].album.id,
-                    name : data.items[i].album.name,
+                    albumName : data.items[i].album.name,
                     image: data.items[i].album.images[1].url,
                     tracks: data.items[i].album.tracks,
                     year: data.items[i].album.release_date
@@ -24,17 +26,19 @@ const getAlbumList = async() => {
             }
         }
         else {
-            let length = tmp[artist_id]["album"].length                     
-            tmp[artist_id]["album"][length] = {
+            let length = tmp[artist_id]["albums"].length                     
+            tmp[artist_id]["albums"][length] = {
                     id: data.items[i].album.id,
-                    name : data.items[i].album.name,
+                    albumName : data.items[i].album.name,
                     image: data.items[i].album.images[1].url,
                     tracks: data.items[i].album.tracks,
                     year: data.items[i].album.release_date
             }
         }
     }       
-
+    console.log(tmp);
+    
+    saveJSON('data', tmp)
     return tmp;
         
 }

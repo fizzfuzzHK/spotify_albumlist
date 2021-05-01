@@ -1,27 +1,54 @@
 import React , {useEffect}from 'react';
 import {useStateValue} from "./DataLayer"
 import MediaQuery from "react-responsive";
-import { withRouter } from 'react-router';
+import { useLocation, withRouter } from 'react-router';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useRouteMatch
+  } from 'react-router-dom';
+  import Album from "./Album"
+
 
 const Artist = withRouter(({history,　...props })=> {
-    console.log('Body');
-    let artistName
-    let list = []
-    if(props.albumList === undefined){
-        console.log("loading");
-    }
-    else{ 
-    var tmp = "Various Artists"
-    console.log('Albums=' + JSON.stringify(props.albumList));
-    
-    for(var i in props.albumList){
-        list.push(props.albumList);
-        }
-    }
+    const match = useRouteMatch();
 
-    useEffect(() => {
-        artistName = props.sourceData
-    },[props.currentArtist])
+    const loadData = key => {
+        const loadJSON = key =>
+        key && JSON.parse(localStorage.getItem(key));
+
+        let data = loadJSON("data")
+
+        return data
+    }
+    
+
+    let url = useLocation()
+    const urlArray = url["pathname"].split('/')
+    let artistId = urlArray[2]
+
+    let data = loadData("data")
+    let artistName　= data[artistId]["artistName"]
+    let albumList = data[artistId]["albums"]
+    let list = []
+    for(var i in albumList){
+        list.push(albumList);
+        }
+    
+    // if(props.albumList === undefined){
+    // }
+    // else{ 
+    // var tmp = "Various Artists"
+    // console.log("albumlist" + props.albumList);
+
+
+    // useEffect(() => {
+    //     console.log('artistName = props.currentArtist["name"]' + props.currentArtist["name"]);
+        
+    //     artistName = props.currentArtist["name"]
+    // },[props.currentArtist])
     
     const handleOnClick = (id) => {
         console.log("id is " + id)
@@ -36,7 +63,7 @@ const Artist = withRouter(({history,　...props })=> {
         //     selected_album: id,
         // })  
         props.setAlbumId(id)
-        history.push(`/album/${id}`);
+        history.push(`/artist/${artistId}/album/${id}`);
     }
 
     // useEffect(() => {
@@ -45,20 +72,27 @@ const Artist = withRouter(({history,　...props })=> {
     // }, [album_id]);
 
     return (
+        <Switch>
+        <Route path={`${match.path}/album/:id`}>
+            <Album {...props}/>
+        </Route>
+        <Route path={`${match.path}`}>
+
         <div className="body">
             <div >
-                
+           
+
                 <h1 className="artist__name">{artistName}</h1>
-                {props.albumList != undefined ? 
+                {albumList != undefined ? 
                 <div>
                     <MediaQuery query="(max-width: 1000px)">
                     <ul className="album__container_ipad">
-                    {props.albumList.map((item, i) =>{
+                    {albumList.map((item, i) =>{
                         return<div className="body__element" onClick={() => handleOnClick(item["id"])}>
 
                             <img className="album__image" key={i} src={item["image"]} />
                             <div className="album__name" key={i}>{item["name"]}</div>
-                            <div className="album__year" key={i}>{item["year"]}年</div>
+                            <div className="album__year" key={i}>{item["year"]}</div>
 
                         </div>
                     })}
@@ -66,12 +100,12 @@ const Artist = withRouter(({history,　...props })=> {
                     </MediaQuery>
                     <MediaQuery query="(min-width: 1001px)">
                     <ul className="album__container_web">
-                    {props.albumList.map((item, i) =>{
+                    {albumList.map((item, i) =>{
                         return<div className="body__element" onClick={() => handleOnClick(item["id"])}>
 
                             <img className="album__image" key={i} src={item["image"]} />
                             <div className="album__name" key={i}>{item["name"]}</div>
-                            <div className="album__year" key={i}>{item["year"]}年</div>
+                            <div className="album__year" key={i}>{item["year"]}</div>
 
                         </div>
                     })}
@@ -153,6 +187,8 @@ const Artist = withRouter(({history,　...props })=> {
               
             `}</style>
         </div>
+        </Route>
+        </Switch>
     );
 });
 

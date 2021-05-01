@@ -1,37 +1,73 @@
 import React,{ useState, useEffect }from "react";
+import { useLocation, withRouter } from 'react-router';
 import { useStateValue } from "./DataLayer"
 import axios from "axios"
 
 const Album = ({...props}) => {
     const [trackList, setTrackList] = useState([])
-    console.log('Album');
     
+    const loadData = key => {
+        const loadJSON = key =>
+        key && JSON.parse(localStorage.getItem(key));
+
+        let data = loadJSON("data")
+
+        return data
+    }
+
+    let data = loadData("data")
+
+    const GetArtistIdfromURL = () => {
+        let url = useLocation()
+        const urlArray = url["pathname"].split('/')
+        return urlArray[2]
+    }
+    let artistId = GetArtistIdfromURL()
+
+    const GetAlbumIdfromURL = () => {
+        let url = useLocation()
+        const urlArray = url["pathname"].split('/')
+        return urlArray[4]
+    }
+    let albumId = GetAlbumIdfromURL()
+
     var list = []
     if(props.albumList === undefined){
-        console.log("loading");
     }
     else{ 
-    var tmp = "Various Artists"
-    
+
     for(var i in props.albumList){
         list.push(props.albumList);
         }
-        console.log(props.albumList);
         
     }
 
+    let albums = data[artistId]["albums"]
+
+    console.dir(albums)
+    let albumIndex = null;
+    for (var i=0; i<albums.length; i++) {
+        if ( albums[i].id == albumId ) {
+            albumIndex = i;
+            break;
+        }
+    }
+    
+    let tracklist = []
+
+    for (let i in albums[albumIndex]["tracks"]["items"]){
+        tracklist[i] = albums[albumIndex]["tracks"]["items"][i]
+    }
+
+    console.dir(tracklist)
+
     useEffect(() => {
-        console.log('api send from album.js ' + props.albumId);
         let id = props.albumId
         axios.post(`http://localhost:8888/gettracks`, {id})
         .then(res => {            
-            console.log("tracks " + JSON.stringify(res,null,2));
-            let tmp = []
-            console.log(res.data.items.length);
-            
+            let tmp = []            
             for (let i in res.data.items){
                 let d = res.data.items[i]
-                console.log("d is " + d);
                 tmp[i] = {
                     name : d.name,
                     id : d.id,
@@ -39,9 +75,7 @@ const Album = ({...props}) => {
                     external_urls: d.external_urls.spotify,
                     track_number :d.track_number,
                     uri : d.uri
-                }
-                console.log(tmp);
-                
+                }                
             }
  
     setTrackList(tmp)
@@ -55,18 +89,18 @@ const Album = ({...props}) => {
         <div>
             <div className="album">
                 {!props.albumList === undefined ? <h1 className="album__title">title</h1> : <div></div>}
-                <img className = "album__image" src="https://i.scdn.co/image/ab67616d00001e022430f37a995a340f1c3b0efd"/>
+                <img className = "album__image" src={albums[albumIndex]["image"]}/>
                 <div className="album__info">
                     <div className="album__header">
-                        <div className="album__title">Hi Scores 2014 Edition - EP</div>
-                        <div className="artist__name">Boards of Canada</div>
-                        <div className="album__genre">エレクトロニック 2014年</div>
+                        <div className="album__title">{albums[albumIndex]["albumName"]}</div>
+                        <div className="artist__name">{data[artistId]["artistName"]}</div>
+                        <div className="album__genre">{albums[albumIndex]["year"]}</div>
                         <div className="album__buttons"></div>
                     </div>
-                    <div className="track_list">
-                            {trackList.map((item, i) =>{
+                    <div className="tracks">
+                            {tracklist.map((item, i) =>{
                                 return(
-                                <div className="list" onClick={() => handleOnClick(item)} key={i}>{i+1}  {item.name}</div>
+                                <div className="tracks__list" onClick={() => handleOnClick(item)} key={i}>{i+1}  {item.name}</div>
                                 
                                 )
                             })}
@@ -92,7 +126,7 @@ const Album = ({...props}) => {
                 .album__image {
                     background-color: red;
                     width: 20vw;
-                    height: 20vw;
+                    height: 18vw;
                 }
 
                 .album__info {
@@ -116,7 +150,7 @@ const Album = ({...props}) => {
                     font-size: small;
                 }
 
-                .track_list {
+                .tracks {
                     list-style: none;
                     margin-top: 20px;
                     margin-left: 5px;
@@ -124,7 +158,7 @@ const Album = ({...props}) => {
                     overflow: scroll;
                     display: table;
                 }
-                .list {
+                .tracks__list {
                     display: table-row;
                     font-size: small;
                     padding: 5px;
