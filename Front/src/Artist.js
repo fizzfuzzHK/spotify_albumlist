@@ -101,6 +101,7 @@ const Artist = withRouter(({history,　...props })=> {
                                     return <div className="body__element" onClick={() => handleOnClick(item["id"])}>
                                                 <img className="album__image" key={i} src={item["image"]} />
                                                 <div className="album__name" key={i}>{item["albumName"]}</div>
+                                                <div className="album__year" key={i}>{artistName}</div>
                                                 <div className="album__year" key={i}>{item["year"]}</div>
                                             </div>
                                 })}
