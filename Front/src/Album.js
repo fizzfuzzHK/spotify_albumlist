@@ -86,21 +86,33 @@ const Album = ({...props}) => {
         
     }
     return (
-        <div>
+        <>
             <div className="album">
                 {!props.albumList === undefined ? <h1 className="album__title">title</h1> : <div></div>}
-                <img className = "album__image" src={albums[albumIndex]["image"]}/>
                 <div className="album__info">
                     <div className="album__header">
-                        <div className="album__title">{albums[albumIndex]["albumName"]}</div>
-                        <div className="artist__name">{data[artistId]["artistName"]}</div>
-                        <div className="album__genre">{albums[albumIndex]["year"]}</div>
-                        <div className="album__buttons"></div>
+                        <img className = "album__image" src={albums[albumIndex]["image"]}/>
+                        <div className="album__metadata">
+                            <div className="album__title">{albums[albumIndex]["albumName"]}</div>
+                            <div className="artist__name">{data[artistId]["artistName"]}</div>
+                            <div className="album__genre">{albums[albumIndex]["year"]}</div>
+                            <div className="album__buttons"></div>
+                        </div>
                     </div>
                     <div className="tracks">
                             {tracklist.map((item, i) =>{
                                 return(
-                                <div className="tracks__list" onClick={() => handleOnClick(item)} key={i}>{i+1}  {item.name}</div>
+                                <div className="tracks__list" onClick={() => handleOnClick(item)} key={i}>
+                                    <div className="tracks__list__container">
+                                        <div className="track__id">
+                                            {i+1}  
+                                        </div>
+                                        <div className="track__name">
+                                            {item.name} 
+                                        </div>
+                                        <div className="track__time">5:21</div>
+                                    </div>
+                                </div>
                                 
                                 )
                             })}
@@ -108,72 +120,102 @@ const Album = ({...props}) => {
                 </div>
             </div>
                 <style jsx>{`
-
                 .album {
-                    display: flex;
-                    width: 100%;
+                    flex-grow: 1;
                     height: 100vh;
-                    flex: 0.9;
-                    background-color: rgb(245, 245, 245);
+                    background-color: whitesmoke;
                     color: black;
                     padding: 40px;
                     padding-right: 40px;
+                    margin-top: 55px;
                     {/* background: linear-gradient(rgb(91, 87, 115), rgba(0,0,0,1)); */}
                     overflow: scroll;
                     {/* border: red solid 1px; */}
                 }
                 
                 .album__image {
-                    background-color: red;
-                    width: 20vw;
-                    height: 18vw;
+                    width: 270px;
+                    height: 270px;
                 }
 
-                .album__info {
+                .album__header {
                     display: flex;
-                    flex-direction: column;
-                    width: 80vw;
+                }
+                .album__metadata{
+                    padding-left: 40px;
+                }
+                .album__info {
                     margin-left: 40px;
 
                 }
 
                 .album__title {
-                    font-size: 30px;
-                    font-weight: 800;
+                    margin-top: 90px;
+                    line-height: 1.24;
+                    font-size: 26px;
+                    font-weight: 600;
+                    letter-spacing:0;
                 }
 
                 .artist__name {
-                    font-size: 20px;   
+                    line-height: 1.24;
+                    font-size: 26px;
+                    color: red;   
                 }
 
                 .album__genre {
-                    font-size: small;
+                    font-size: 14px;
+                    line-height: 1.7;
+                    font-weight: 300;
                 }
 
                 .tracks {
                     list-style: none;
-                    margin-top: 20px;
+                    margin-top: 40px;
                     margin-left: 5px;
                     padding: 0;
                     overflow: scroll;
                     display: table;
+                    width: 100%;
                 }
                 .tracks__list {
+                    width: 100%;
                     display: table-row;
+                    position: relative;
                     font-size: small;
-                    padding: 5px;
+                    padding: 5px 20px;
                     color: grey;
                     cursor: pointer;
                     transition: 100ms color ease-in;
                     margin-left: 0px;
                 }
-
+                .tracks__list__container {
+                    display: flex;
+                    align-items: center;
+                    height: 46px;
+                    max-width: 100%;
+                }
+                .track__id {
+                    display: inline-flex;
+                    font-size: 13px;
+                    margin-right: 12px;
+                }
+                .track__name {
+                    display: inline-flex;
+                    font-size: 13px;
+                    color: black;
+                }
+                .track__time {
+                    margin-left:auto;
+                    font-size: 13px;
+                    margin-right: 200px;
+                }
                 .list:hover {
                     color: white
                 }
             `}</style>
 
-        </div>
+        </>
     );
 };
 

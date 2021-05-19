@@ -69,25 +69,15 @@ const App = () => {
 
         <style jsx>{`
         .app {
-            display: flex;
+            {/* display: flex;
             width: 100%;
-            flex-direction: column;
+            flex-direction: column; */}
         }
         .app__body {
-            width: 90%;
+            width: 100%;
             display: flex;
-            flex-grow: 1;
         }
-        .footer {
-            position: fixed;
-            display: flex;
-            justify-content: space-between;
-            bottom: 0;
-            padding: 20px;
-            height: 65px;
-            width: 97%;
-            background-color: #282828;
-        }
+       
         `}
         </style>
         </div>
